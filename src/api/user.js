@@ -10,3 +10,18 @@ export function getCaptcha() {
     method: "GET",
   });
 }
+
+export function userIsExist(loginId) {
+  return request({
+    url: `/api/user/userIsExist/${loginId}`,
+    method: "GET",
+  });
+}
+
+export function userRegister(data) {
+  return request({
+    url: "/api/user",
+    method: "POST",
+    data,
+  });
+}
