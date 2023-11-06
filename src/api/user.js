@@ -25,3 +25,25 @@ export function userRegister(data) {
     data,
   });
 }
+
+export function userLogin(data) {
+  return request({
+    url: "/api/user/login",
+    method: "POST",
+    data,
+  });
+}
+
+export function getUserById(id) {
+  return request({
+    url: `/api/user/${id}`,
+    method: "GET",
+  });
+}
+
+export function getInfo() {
+  return request({
+    url: "/api/user/whoami",
+    method: "GET",
+  });
+}

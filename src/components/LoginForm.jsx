@@ -11,7 +11,13 @@ import {
 } from "antd";
 import styles from "../css/LoginForm.module.css";
 import { useState, useRef, useEffect } from "react";
-import { getCaptcha, userIsExist, userRegister } from "../api/user";
+import {
+  getCaptcha,
+  userIsExist,
+  userRegister,
+  userLogin,
+  getUserById,
+} from "../api/user";
 import { changeLoginStatus, initUserInfo } from "../redux/userSlice";
 import { useDispatch } from "react-redux";
 
@@ -40,8 +46,27 @@ function LoginForm(props) {
     captchaClickHandle();
   }, [props.isShow]);
 
-  function loginHandle() {
-    console.log("loginHandle");
+  async function loginHandle() {
+    const result = await userLogin(loginInfo);
+    if (result.data) {
+      const data = result.data;
+      if (!data.data) {
+        message.error("账号或密码错误");
+        captchaClickHandle();
+      } else if (!data.data.enabled) {
+        message.warning("账号已被禁用");
+        captchaClickHandle();
+      } else {
+        localStorage.userToken = data.token;
+        const res = await getUserById(data.data._id);
+        dispatch(initUserInfo(res.data));
+        dispatch(changeLoginStatus(true));
+        handleCancel();
+      }
+    } else {
+      message.warning(result.msg);
+      captchaClickHandle();
+    }
   }
 
   function handleCancel() {
