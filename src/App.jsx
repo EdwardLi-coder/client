@@ -1,6 +1,6 @@
 import { Layout, message, Modal } from "antd";
 import PageFooter from "./components/PageFooter";
-import PageHeader from "./components/PageHeader";
+import NavHeader from "./components/NavHeader";
 import "./css/App.css";
 import RouteConfig from "./router";
 import LoginForm from "./components/LoginForm";
@@ -45,7 +45,7 @@ function App() {
   return (
     <div className="App">
       <Header className="header">
-        <PageHeader loginHandle={loginHandle} />
+        <NavHeader loginHandle={loginHandle} />
       </Header>
       <Content className="content">
         <RouteConfig />
